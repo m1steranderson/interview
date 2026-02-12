@@ -35,17 +35,7 @@ The same production `id` is used as `CF_NAMESPACE_ID` in the microservice `.env`
 
 ---
 
-## 2. Deploy kv-service (required before running web)
-
-The web worker calls kv-service via a Service Binding (RPC). The binding resolves by **deployed worker name**, so kv-service must be deployed at least once — even for local `dev:web --remote`.
-
-```bash
-bun run deploy:kv
-```
-
----
-
-## 3. Fill in .dev.vars (local worker secrets)
+## 2. Fill in .dev.vars (local worker secrets)
 
 Wrangler auto-loads `.dev.vars` during `wrangler dev`. Create two identical files:
 
@@ -62,6 +52,16 @@ KV_SECRET=your-shared-hmac-secret
 ```
 
 > `KV_SECRET` must be the **same value** in all three packages (web, kv-service, microservice).
+
+---
+
+## 3. Deploy kv-service (required before running web)
+
+The web worker calls kv-service via a Service Binding (RPC). The binding resolves by **deployed worker name**, so kv-service must be deployed at least once — even for local `dev:web --remote`.
+
+```bash
+bun run deploy:kv
+```
 
 ---
 

@@ -1,0 +1,16 @@
+{
+  "name": "task-manager",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "dev:kv": "cd packages/kv-service && bunx wrangler dev --port 8786 --remote",
+    "dev:web": "cd packages/web && bun run build:css && bunx wrangler dev --port 8787 --remote",
+    "dev:microservice": "cd packages/microservice && bun --env-file .dev.vars --watch run src/main.ts",
+    "deploy:kv": "cd packages/kv-service && bunx wrangler deploy",
+    "deploy:web": "cd packages/web && bun run build:css && bunx wrangler deploy",
+    "deploy": "bun run deploy:kv && bun run deploy:web",
+    "docker:up": "docker compose --env-file packages/microservice/.env up --build",
+    "test": "bun test packages/microservice packages/shared",
+    "typecheck": "bun run --filter '*' typecheck"
+  }
+}

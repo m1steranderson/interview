@@ -1,0 +1,101 @@
+bun run docker:up
+$ docker compose --env-file packages/microservice/.env up --build
+[+] Building 7.7s (16/16) FINISHED                                                                                                                                          
+ => [internal] load local bake definitions                                                                                                                             0.0s
+ => => reading from stdin 399B                                                                                                                                         0.0s
+ => [internal] load build definition from Dockerfile                                                                                                                   0.0s
+ => => transferring dockerfile: 720B                                                                                                                                   0.0s
+ => [internal] load metadata for docker.io/oven/bun:1                                                                                                                  1.2s
+ => [internal] load .dockerignore                                                                                                                                      0.0s
+ => => transferring context: 2B                                                                                                                                        0.0s
+ => [1/9] FROM docker.io/oven/bun:1@sha256:856da45d07aeb62eb38ea3e7f9e1794c0143a4ff63efb00e6c4491b627e2a521                                                            0.0s
+ => => resolve docker.io/oven/bun:1@sha256:856da45d07aeb62eb38ea3e7f9e1794c0143a4ff63efb00e6c4491b627e2a521                                                            0.0s
+ => [internal] load build context                                                                                                                                      0.0s
+ => => transferring context: 25.43kB                                                                                                                                   0.0s
+ => CACHED [2/9] WORKDIR /app                                                                                                                                          0.0s
+ => CACHED [3/9] COPY packages/shared/package.json packages/shared/                                                                                                    0.0s
+ => [4/9] COPY packages/microservice/package.json packages/microservice/                                                                                               0.0s
+ => [5/9] RUN echo '{"workspaces":["packages/*"]}' > package.json                                                                                                      0.1s
+ => [6/9] COPY packages/shared/ packages/shared/                                                                                                                       0.0s
+ => [7/9] COPY packages/microservice/ packages/microservice/                                                                                                           0.0s
+ => [8/9] RUN bun install                                                                                                                                              1.6s
+ => [9/9] WORKDIR /app/packages/microservice                                                                                                                           0.1s 
+ => exporting to image                                                                                                                                                 4.5s 
+ => => exporting layers                                                                                                                                                2.4s 
+ => => exporting manifest sha256:f6db63d6c862050cb058fd12e15c29cf8d48dc10b5b64fef3e0cc5de280bfd39                                                                      0.0s 
+ => => exporting config sha256:7dc5c8b0d783f219135ebf66afa67e48ef5666cf56a50d8189f4977ac3f55c9c                                                                        0.0s
+ => => exporting attestation manifest sha256:771500abe6e632057cba1c86c422dd7379b5551b0dd852802e21ee344aac7d4b                                                          0.0s
+ => => exporting manifest list sha256:56dd6b35bcbc49084c23b8c22f4eb7e61c608b7dff3fa1e5a5bfd8a49d1a7fc0                                                                 0.0s
+ => => naming to docker.io/library/interview-microservice:latest                                                                                                       0.0s
+ => => unpacking to docker.io/library/interview-microservice:latest                                                                                                    2.1s
+ => resolving provenance for metadata file                                                                                                                             0.0s
+[+] Running 2/2
+ ✔ microservice                        Built                                                                                                                           0.0s 
+ ✔ Container interview-microservice-1  Recreated                                                                                                                       0.7s 
+Attaching to microservice-1, nats-1
+nats-1          | [1] 2026/02/12 11:31:19.213802 [INF] Starting nats-server
+nats-1          | [1] 2026/02/12 11:31:19.213827 [INF]   Version:  2.12.4
+nats-1          | [1] 2026/02/12 11:31:19.213828 [INF]   Git:      [34894c1]
+nats-1          | [1] 2026/02/12 11:31:19.213829 [INF]   Name:     ND3MUZ3RGOAGMRHDLDFFLAE2LBTPOIE6HPUZPRLWMI4WXDO5M6UZSAQM
+nats-1          | [1] 2026/02/12 11:31:19.213830 [INF]   ID:       ND3MUZ3RGOAGMRHDLDFFLAE2LBTPOIE6HPUZPRLWMI4WXDO5M6UZSAQM
+nats-1          | [1] 2026/02/12 11:31:19.216357 [INF] Starting http monitor on 0.0.0.0:8222
+nats-1          | [1] 2026/02/12 11:31:19.216489 [INF] Listening for client connections on 0.0.0.0:4222
+nats-1          | [1] 2026/02/12 11:31:19.216678 [INF] Server is ready
+microservice-1  | [Nest] 1  - 02/12/2026, 11:31:22 AM     LOG [NestFactory] Starting Nest application...
+microservice-1  | [Nest] 1  - 02/12/2026, 11:31:22 AM     LOG [InstanceLoader] AppModule dependencies initialized +12ms
+microservice-1  | [Nest] 1  - 02/12/2026, 11:31:22 AM     LOG [InstanceLoader] CqrsModule dependencies initialized +0ms
+microservice-1  | [Nest] 1  - 02/12/2026, 11:31:22 AM     LOG [InstanceLoader] TasksModule dependencies initialized +0ms
+microservice-1  | [Nest] 1  - 02/12/2026, 11:31:23 AM     LOG [NestMicroservice] Nest microservice successfully started +39ms
+microservice-1  | Microservice is listening on NATS
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:21 AM     LOG [TasksController] [575c6f93-c6ea-46b9-b323-7de69969647a] tasks.created — id=test-002
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:21 AM     LOG [CreateTaskHandler] [575c6f93-c6ea-46b9-b323-7de69969647a] CREATE task=test-002 attempt=0
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:21 AM     LOG [KvTaskRepository] [575c6f93-c6ea-46b9-b323-7de69969647a] KV PUT task:test-002 — OK (response: null)
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:22 AM     LOG [KvVerifyService] [575c6f93-c6ea-46b9-b323-7de69969647a] KV verify GET /tasks/test-002 → 200
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:22 AM     LOG [CachePurgeHandler] [575c6f93-c6ea-46b9-b323-7de69969647a] create succeeded → purging cache for task=test-002
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:22 AM     LOG [CachePurgeService] [575c6f93-c6ea-46b9-b323-7de69969647a] Cache purged for task=test-002
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:41 AM     LOG [TasksController] [ba429773-5538-414d-87a4-fe07fdc2ea04] tasks.updated — id=test-001
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:41 AM     LOG [UpdateTaskHandler] [ba429773-5538-414d-87a4-fe07fdc2ea04] UPDATE task=test-001 attempt=0
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:42 AM     LOG [KvTaskRepository] [ba429773-5538-414d-87a4-fe07fdc2ea04] KV GET task:test-001 — OK
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:42 AM     LOG [KvTaskRepository] [ba429773-5538-414d-87a4-fe07fdc2ea04] KV PUT task:test-001 — OK (response: null)
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:42 AM     LOG [KvVerifyService] [ba429773-5538-414d-87a4-fe07fdc2ea04] KV verify GET /tasks/test-001 → 200
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:42 AM     LOG [CachePurgeHandler] [ba429773-5538-414d-87a4-fe07fdc2ea04] update succeeded → purging cache for task=test-001
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:42 AM     LOG [CachePurgeService] [ba429773-5538-414d-87a4-fe07fdc2ea04] Cache purged for task=test-001
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:52 AM     LOG [TasksController] [39434230-8959-4d71-879b-e3bf52f505d7] tasks.created — id=test-001
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:52 AM     LOG [CreateTaskHandler] [39434230-8959-4d71-879b-e3bf52f505d7] CREATE task=test-001 attempt=0
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:52 AM     LOG [KvTaskRepository] [39434230-8959-4d71-879b-e3bf52f505d7] KV PUT task:test-001 — OK (response: null)
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:52 AM     LOG [KvVerifyService] [39434230-8959-4d71-879b-e3bf52f505d7] KV verify GET /tasks/test-001 → 200
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:52 AM     LOG [CachePurgeHandler] [39434230-8959-4d71-879b-e3bf52f505d7] create succeeded → purging cache for task=test-001
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:52 AM     LOG [CachePurgeService] [39434230-8959-4d71-879b-e3bf52f505d7] Cache purged for task=test-001
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:58 AM     LOG [TasksController] [8976c93e-5153-4b80-9083-69320537fc97] tasks.updated — id=test-001
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:58 AM     LOG [UpdateTaskHandler] [8976c93e-5153-4b80-9083-69320537fc97] UPDATE task=test-001 attempt=0
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:58 AM     LOG [KvTaskRepository] [8976c93e-5153-4b80-9083-69320537fc97] KV GET task:test-001 — OK
+microservice-1  | [Nest] 1  - 02/12/2026, 11:36:58 AM   ERROR [UpdateTaskHandler] [8976c93e-5153-4b80-9083-69320537fc97] UPDATE task=test-001 attempt=0 VALIDATION FAILED: Invalid status "wrong_status". Allowed: pending, in_progress, done
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:03 AM     LOG [TasksController] [1ef9c8ae-fb71-4bba-9191-157a3b7f358d] tasks.created — id=#?test-002
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:03 AM     LOG [CreateTaskHandler] [1ef9c8ae-fb71-4bba-9191-157a3b7f358d] CREATE task=#?test-002 attempt=0
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:03 AM   ERROR [CreateTaskHandler] [1ef9c8ae-fb71-4bba-9191-157a3b7f358d] CREATE task=#?test-002 attempt=0 VALIDATION or SAVE has FAILED: id must contain only URL-safe characters (A-Z, a-z, 0-9, -, ., _, ~)
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:09 AM     LOG [TasksController] [b413226a-c045-4afd-82be-a1ee7e240c4c] tasks.deleted — id=test-001
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:09 AM     LOG [DeleteTaskHandler] [b413226a-c045-4afd-82be-a1ee7e240c4c] DELETE task=test-001 attempt=0
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:10 AM     LOG [KvTaskRepository] [b413226a-c045-4afd-82be-a1ee7e240c4c] KV DELETE task:test-001 — OK (response: null)
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:10 AM     LOG [KvVerifyService] [b413226a-c045-4afd-82be-a1ee7e240c4c] KV verify GET /tasks/test-001 → 200
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:10 AM    WARN [DeleteTaskHandler] [b413226a-c045-4afd-82be-a1ee7e240c4c] DELETE task=test-001 attempt=0 verification FAILED
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:10 AM    WARN [TasksSaga] [b413226a-c045-4afd-82be-a1ee7e240c4c] Retry 1/5 in 1000ms: KV read-back verification failed
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:11 AM     LOG [DeleteTaskHandler] [b413226a-c045-4afd-82be-a1ee7e240c4c] DELETE task=test-001 attempt=1
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:11 AM     LOG [KvTaskRepository] [b413226a-c045-4afd-82be-a1ee7e240c4c] KV DELETE task:test-001 — OK (response: null)
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:11 AM     LOG [KvVerifyService] [b413226a-c045-4afd-82be-a1ee7e240c4c] KV verify GET /tasks/test-001 → 200
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:11 AM    WARN [DeleteTaskHandler] [b413226a-c045-4afd-82be-a1ee7e240c4c] DELETE task=test-001 attempt=1 verification FAILED
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:11 AM    WARN [TasksSaga] [b413226a-c045-4afd-82be-a1ee7e240c4c] Retry 2/5 in 3000ms: KV read-back verification failed
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:14 AM     LOG [DeleteTaskHandler] [b413226a-c045-4afd-82be-a1ee7e240c4c] DELETE task=test-001 attempt=2
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:14 AM     LOG [KvTaskRepository] [b413226a-c045-4afd-82be-a1ee7e240c4c] KV DELETE task:test-001 — OK (response: null)
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:14 AM     LOG [KvVerifyService] [b413226a-c045-4afd-82be-a1ee7e240c4c] KV verify GET /tasks/test-001 → 200
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:14 AM    WARN [DeleteTaskHandler] [b413226a-c045-4afd-82be-a1ee7e240c4c] DELETE task=test-001 attempt=2 verification FAILED
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:14 AM    WARN [TasksSaga] [b413226a-c045-4afd-82be-a1ee7e240c4c] Retry 3/5 in 10000ms: KV read-back verification failed
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:25 AM     LOG [DeleteTaskHandler] [b413226a-c045-4afd-82be-a1ee7e240c4c] DELETE task=test-001 attempt=3
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:25 AM     LOG [KvTaskRepository] [b413226a-c045-4afd-82be-a1ee7e240c4c] KV DELETE task:test-001 — OK (response: null)
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:25 AM     LOG [KvVerifyService] [b413226a-c045-4afd-82be-a1ee7e240c4c] KV verify GET /tasks/test-001 → 200
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:25 AM    WARN [DeleteTaskHandler] [b413226a-c045-4afd-82be-a1ee7e240c4c] DELETE task=test-001 attempt=3 verification FAILED
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:25 AM    WARN [TasksSaga] [b413226a-c045-4afd-82be-a1ee7e240c4c] Retry 4/5 in 20000ms: KV read-back verification failed
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:45 AM     LOG [DeleteTaskHandler] [b413226a-c045-4afd-82be-a1ee7e240c4c] DELETE task=test-001 attempt=4
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:45 AM     LOG [KvTaskRepository] [b413226a-c045-4afd-82be-a1ee7e240c4c] KV DELETE task:test-001 — OK (response: null)
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:46 AM     LOG [KvVerifyService] [b413226a-c045-4afd-82be-a1ee7e240c4c] KV verify GET /tasks/test-001 → 404
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:46 AM     LOG [CachePurgeHandler] [b413226a-c045-4afd-82be-a1ee7e240c4c] delete succeeded → purging cache for task=test-001
+microservice-1  | [Nest] 1  - 02/12/2026, 11:37:46 AM     LOG [CachePurgeService] [b413226a-c045-4afd-82be-a1ee7e240c4c] Cache purged for task=test-001

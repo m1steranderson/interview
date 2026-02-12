@@ -1,0 +1,14 @@
+name = "task-manager-kv-service"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+# preview_id = id so that `wrangler dev --remote` and microservice (REST API)
+# both read/write the same KV namespace during local development.
+[[kv_namespaces]]
+binding = "TASKS_KV"
+id = "ab5608c11d8d4300a460be8898f418ca"
+preview_id = "ab5608c11d8d4300a460be8898f418ca"
+
+# KV_SECRET:
+#   local  → .dev.vars (auto-loaded by wrangler dev)
+#   prod   → wrangler secret put KV_SECRET

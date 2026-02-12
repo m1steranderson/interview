@@ -55,7 +55,20 @@ KV_SECRET=your-shared-hmac-secret
 
 ---
 
-## 3. Deploy kv-service (required before running web)
+## 3. Set remote secrets (for deployed workers)
+
+Each worker needs `KV_SECRET` as a production secret:
+
+```bash
+cd packages/kv-service && npx wrangler secret put KV_SECRET
+cd packages/web && npx wrangler secret put KV_SECRET
+```
+
+The CLI will prompt for the value interactively — enter the same shared secret.
+
+---
+
+## 4. Deploy kv-service (required before running web)
 
 The web worker calls kv-service via a Service Binding (RPC). The binding resolves by **deployed worker name**, so kv-service must be deployed at least once — even for local `dev:web --remote`.
 
@@ -65,7 +78,7 @@ bun run deploy:kv
 
 ---
 
-## 4. Fill in microservice .env (for Docker)
+## 5. Fill in microservice .env (for Docker)
 
 ```bash
 cp packages/microservice/.env.example packages/microservice/.env
@@ -86,18 +99,6 @@ To create the API token: Cloudflare Dashboard → My Profile → API Tokens → 
 
 For local dev without Docker, create **`packages/microservice/.dev.vars`** with the same `KV_SECRET` value (used by `bun run dev:microservice`).
 
----
-
-## 5. Set remote secrets (for deployed workers)
-
-Each worker needs `KV_SECRET` as a production secret:
-
-```bash
-cd packages/kv-service && npx wrangler secret put KV_SECRET
-cd packages/web && npx wrangler secret put KV_SECRET
-```
-
-The CLI will prompt for the value interactively — enter the same shared secret.
 
 ---
 

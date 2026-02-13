@@ -13,6 +13,9 @@ binding = "KV_SERVICE"
 service = "task-manager-kv-service"
 entrypoint = "TaskService"
 
+[define]
+WITH_WEB_CACHE = "false"   # set to "true" to enable CF Cache API
+
 # KV_SECRET:
 #   local  → .dev.vars (auto-loaded by wrangler dev)
 #   prod   → wrangler secret put KV_SECRET

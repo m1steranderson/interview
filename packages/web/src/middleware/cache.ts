@@ -17,7 +17,7 @@ import { CORELATION_ID_HEADER }  from "@task-manager/shared";
  */
 export const cacheMiddleware: MiddlewareHandler<AppEnv> = async (c, next) => {
   // Skip non-app routes
-  if (c.req.path.startsWith("/api") || c.req.path.startsWith("/.well-known")) {
+  if (c.req.path.startsWith("/api")) {
     return next();
   }
 

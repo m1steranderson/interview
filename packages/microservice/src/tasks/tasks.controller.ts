@@ -6,7 +6,6 @@ import {
   type TaskCreatedPayload,
   type TaskUpdatedPayload,
   type TaskDeletedPayload,
-  CORELATION_ID_HEADER,
 } from "@task-manager/shared";
 import {
   CreateTaskCommand,
@@ -34,7 +33,7 @@ export class TasksController {
     @Payload() data: TaskCreatedPayload,
     @Ctx() context: NatsContext,
   ): Promise<void> {
-    const correlationId = data[CORELATION_ID_HEADER] ?? crypto.randomUUID();
+    const correlationId = data['correlationId'] ?? crypto.randomUUID();
 
     this.logger.log(
       `[${correlationId}] ${context.getSubject()} — id=${data.id}`,
@@ -50,7 +49,7 @@ export class TasksController {
     @Payload() data: TaskUpdatedPayload,
     @Ctx() context: NatsContext,
   ): Promise<void> {
-    const correlationId = data[CORELATION_ID_HEADER] ?? crypto.randomUUID();
+    const correlationId = data['correlationId'] ?? crypto.randomUUID();
 
     if (!data.id || typeof data.id !== "string") {
       this.logger.warn(`[${correlationId}] ${context.getSubject()} — missing id, skipping`);
@@ -71,7 +70,7 @@ export class TasksController {
     @Payload() data: TaskDeletedPayload,
     @Ctx() context: NatsContext,
   ): Promise<void> {
-    const correlationId = data[CORELATION_ID_HEADER] ?? crypto.randomUUID();
+    const correlationId = data['correlationId'] ?? crypto.randomUUID();
 
     if (!data.id || typeof data.id !== "string") {
       this.logger.warn(`[${correlationId}] ${context.getSubject()} — missing id, skipping`);

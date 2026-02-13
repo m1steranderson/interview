@@ -45,7 +45,7 @@ api.get("/tasks/:id", async (c) => {
  *
  * Purges: / (list page) + /tasks/:id (detail page)
  */
-api.post("/cache/purge", async (c) => {
+WITH_WEB_CACHE && api.post("/cache/purge", async (c) => {
   const cid = c.get(CORELATION_ID_HEADER) ?? "unknown";
   const token = c.req.query("token");
   const ts = c.req.query("ts");

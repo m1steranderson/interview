@@ -8,6 +8,8 @@ import { api } from "./routes/api.js";
 import type { Task } from "@task-manager/shared";
 
 import { CORELATION_ID_HEADER }  from "@task-manager/shared";
+
+
 /**
  * Manual interface for the KV_SERVICE binding.
  * Using Service<TaskService> causes "Type instantiation is excessively deep"
@@ -24,7 +26,6 @@ interface KVServiceBinding {
   getTask(id: string, correlationId?: string): Promise<Task | null>;
   listTasks(offset?: number, limit?: number, correlationId?: string): Promise<ListTasksResult>;
 }
-
 export const CACHE_NAME = 'iv:task-cache';
 
 /** Env types shared across all routes and middleware */
@@ -40,7 +41,7 @@ const app = new Hono<AppEnv>();
 
 // --- Middleware (order matters) ---
 app.use("*", correlationMiddleware); // 1. Always first
-app.use("*", cacheMiddleware);       // 2. Cache SSR pages (skips /api/*)
+WITH_WEB_CACHE && app.use("*", cacheMiddleware); // 2. Cache SSR pages (skips /api/*)
 
 
 // --- Routes ---

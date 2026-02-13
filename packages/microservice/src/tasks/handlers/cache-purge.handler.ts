@@ -18,6 +18,11 @@ export class CachePurgeHandler implements IEventHandler<KvWriteSucceededEvent> {
       `[${event.correlationId}] ${event.operation} succeeded → purging cache for task=${event.taskId}`,
     );
 
+    if (process.env.WITH_WEB_CACHE !== "true") {
+      this.logger.debug(`[${event.correlationId}] Cache disabled, skipping purge`);
+      return;
+    }
+
     await this.cachePurge.purge(event.taskId, event.correlationId);
   }
 }

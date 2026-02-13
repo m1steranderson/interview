@@ -23,12 +23,12 @@ Minimal production-minded system: SSR web app (Hono + Cloudflare Workers) + back
                        └──────┬──────┬────────┘
                               │      │
               CF REST API v4  │      │ POST /api/cache/purge (HMAC) disabled, WITH_WEB_CACHE=false
-              (KV write)      │      │
+              SDK (KV write)  │      │
                               │      ▼
                ┌──────────┐   │ ┌────────────────────┐
                │          │   │ │   Web Worker (Hono)│
-               │ CF KV    │◄────│  SSR read-only     │
-               │          │ RPC │                    │
+               │ CF KV    │◄─ ┘ │  SSR read-only     │
+               │          │   │ |                    │
                └──────────┘   | │  GET /             │
                     ▲         | │  GET /tasks/:id    │
                     │         | │  GET /api/tasks    │

@@ -7,7 +7,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
+    "jsxImportSource": "react",
     "types": ["@cloudflare/workers-types"],
     "paths": {
       "@task-manager/shared": ["../shared/src"]

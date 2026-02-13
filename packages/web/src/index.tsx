@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { renderToString } from "react-dom/server";
 import { correlationMiddleware } from "./middleware/correlation.js";
 import { cacheMiddleware } from "./middleware/cache.js";
 import { pages } from "./routes/pages.js";
@@ -27,6 +28,11 @@ interface KVServiceBinding {
   listTasks(offset?: number, limit?: number, correlationId?: string): Promise<ListTasksResult>;
 }
 export const CACHE_NAME = 'iv:task-cache';
+
+/** Render React element to an HTML string with doctype */
+export function renderHtml(element: React.ReactElement): string {
+  return `<!DOCTYPE html>${renderToString(element)}`;
+}
 
 /** Env types shared across all routes and middleware */
 export type AppEnv = {
@@ -58,12 +64,14 @@ app.onError((err, c) => {
   }
 
   return c.html(
-    <html>
-      <body>
-        <h1>500 — Internal Server Error</h1>
-        <p>Correlation ID: {cid}</p>
-      </body>
-    </html>,
+    renderHtml(
+      <html>
+        <body>
+          <h1>500 — Internal Server Error</h1>
+          <p>Correlation ID: {cid}</p>
+        </body>
+      </html>,
+    ),
     500,
   );
 });
@@ -77,12 +85,14 @@ app.notFound((c) => {
   }
 
   return c.html(
-    <html>
-      <body>
-        <h1>404 — Not Found</h1>
-        <a href="/">Back to home</a>
-      </body>
-    </html>,
+    renderHtml(
+      <html>
+        <body>
+          <h1>404 — Not Found</h1>
+          <a href="/">Back to home</a>
+        </body>
+      </html>,
+    ),
     404,
   );
 });

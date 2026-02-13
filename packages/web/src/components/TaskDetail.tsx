@@ -1,4 +1,4 @@
-import type { FC } from "hono/jsx";
+import type { FC } from "react";
 import type { Task } from "@task-manager/shared";
 
 const statusBadge: Record<Task["status"], string> = {
@@ -8,37 +8,37 @@ const statusBadge: Record<Task["status"], string> = {
 };
 
 export const TaskDetail: FC<{ task: Task }> = ({ task }) => (
-  <article class="bg-white rounded-lg border border-gray-200 p-6">
-    <div class="flex items-start justify-between mb-4">
-      <h1 class="text-2xl font-bold">{task.title}</h1>
+  <article className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="flex items-start justify-between mb-4">
+      <h1 className="text-2xl font-bold">{task.title}</h1>
       <span
-        class={`text-sm font-medium px-3 py-1 rounded-full ${statusBadge[task.status]}`}
+        className={`text-sm font-medium px-3 py-1 rounded-full ${statusBadge[task.status]}`}
       >
         {task.status}
       </span>
     </div>
 
     {task.description && (
-      <p class="text-gray-600 mb-6">{task.description}</p>
+      <p className="text-gray-600 mb-6">{task.description}</p>
     )}
 
-    <dl class="grid grid-cols-2 gap-4 text-sm text-gray-500 border-t border-gray-100 pt-4">
+    <dl className="grid grid-cols-2 gap-4 text-sm text-gray-500 border-t border-gray-100 pt-4">
       <div>
-        <dt class="font-medium text-gray-700">ID</dt>
-        <dd class="font-mono text-xs mt-0.5">{task.id}</dd>
+        <dt className="font-medium text-gray-700">ID</dt>
+        <dd className="font-mono text-xs mt-0.5">{task.id}</dd>
       </div>
       <div>
-        <dt class="font-medium text-gray-700">Created</dt>
-        <dd class="mt-0.5">{new Date(task.createdAt).toLocaleString()}</dd>
+        <dt className="font-medium text-gray-700">Created</dt>
+        <dd className="mt-0.5">{new Date(task.createdAt).toLocaleString()}</dd>
       </div>
       <div>
-        <dt class="font-medium text-gray-700">Updated</dt>
-        <dd class="mt-0.5">{new Date(task.updatedAt).toLocaleString()}</dd>
+        <dt className="font-medium text-gray-700">Updated</dt>
+        <dd className="mt-0.5">{new Date(task.updatedAt).toLocaleString()}</dd>
       </div>
     </dl>
 
-    <div class="mt-6">
-      <a href="/" class="text-blue-600 hover:text-blue-800 text-sm">
+    <div className="mt-6">
+      <a href="/" className="text-blue-600 hover:text-blue-800 text-sm">
         &larr; Back to list
       </a>
     </div>

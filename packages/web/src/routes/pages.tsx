@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import type { AppEnv } from "../index.js";
+import { renderHtml } from "../index.js";
 import { CORELATION_ID_HEADER } from "@task-manager/shared";
 import { Layout } from "../components/Layout.js";
 import { TaskList } from "../components/TaskList.js";
@@ -15,10 +16,12 @@ pages.get("/", async (c) => {
   console.log(`[${cid}] GET / — rendering ${tasks.length} tasks`);
 
   return c.html(
-    <Layout title="Tasks">
-      <h1 class="text-2xl font-bold mb-6">Tasks</h1>
-      <TaskList tasks={tasks} />
-    </Layout>,
+    renderHtml(
+      <Layout title="Tasks">
+        <h1 className="text-2xl font-bold mb-6">Tasks</h1>
+        <TaskList tasks={tasks} />
+      </Layout>,
+    ),
   );
 });
 
@@ -32,24 +35,28 @@ pages.get("/tasks/:id", async (c) => {
 
   if (!task) {
     return c.html(
-      <Layout title="Not Found">
-        <div class="text-center py-12">
-          <h1 class="text-2xl font-bold text-gray-800">Task not found</h1>
-          <p class="text-gray-500 mt-2">
-            No task with ID <code class="text-sm">{id}</code>
-          </p>
-          <a href="/" class="text-blue-600 hover:text-blue-800 text-sm mt-4 inline-block">
-            &larr; Back to list
-          </a>
-        </div>
-      </Layout>,
+      renderHtml(
+        <Layout title="Not Found">
+          <div className="text-center py-12">
+            <h1 className="text-2xl font-bold text-gray-800">Task not found</h1>
+            <p className="text-gray-500 mt-2">
+              No task with ID <code className="text-sm">{id}</code>
+            </p>
+            <a href="/" className="text-blue-600 hover:text-blue-800 text-sm mt-4 inline-block">
+              &larr; Back to list
+            </a>
+          </div>
+        </Layout>,
+      ),
       404,
     );
   }
 
   return c.html(
-    <Layout title={task.title}>
-      <TaskDetail task={task} />
-    </Layout>,
+    renderHtml(
+      <Layout title={task.title}>
+        <TaskDetail task={task} />
+      </Layout>,
+    ),
   );
 });

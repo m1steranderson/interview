@@ -27,7 +27,7 @@ Minimal production-minded system: SSR web app (Hono + Cloudflare Workers) + back
                               │      ▼
                ┌──────────┐   │ ┌────────────────────┐
                │          │   │ │   Web Worker (Hono)│
-               │ CF KV    │◄──  │  SSR read-only     │
+               │ CF KV    │◄────│  SSR read-only     │
                │          │ RPC │                    │
                └──────────┘   | │  GET /             │
                     ▲         | │  GET /tasks/:id    │

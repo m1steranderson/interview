@@ -29,12 +29,12 @@ Minimal production-minded system: SSR web app (Hono + Cloudflare Workers) + back
                │          │   │ │   Web Worker (Hono)│
                │ CF KV    │◄──  │  SSR read-only     │
                │          │ RPC │                    │
-               └──────────┘     │  GET /             │
-                    ▲           │  GET /tasks/:id    │
-                    │           │  GET /api/tasks    │
-                    │           │  GET /api/tasks/:id│
-                    │           │  POST /api/cache/  │
-               ┌────┴────┐      │     purge(disabled)│
+               └──────────┘   | │  GET /             │
+                    ▲         | │  GET /tasks/:id    │
+                    │         | │  GET /api/tasks    │
+                    │         | │  GET /api/tasks/:id│
+                    │       GET │  POST /api/cache/  │
+               ┌────┴────┐◄── ┘ |     purge(disabled)│
                │ KV Svc  │◄─────└────────────────────┘
                │ Worker  │ Service Binding (RPC)
                └─────────┘

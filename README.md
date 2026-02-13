@@ -22,7 +22,7 @@ Minimal production-minded system: SSR web app (Hono + Cloudflare Workers) + back
                        │ Saga (retry/backoff) │
                        └──────┬──────┬────────┘
                               │      │
-              CF REST API v4  │      │ POST /api/cache/purge (HMAC)
+              CF REST API v4  │      │ POST /api/cache/purge (HMAC) disabled, WITH_WEB_CACHE=false
               (KV write)      │      │
                               │      ▼
                ┌──────────┐   │ ┌────────────────────┐
@@ -34,7 +34,7 @@ Minimal production-minded system: SSR web app (Hono + Cloudflare Workers) + back
                     │           │  GET /api/tasks    │
                     │           │  GET /api/tasks/:id│
                     │           │  POST /api/cache/  │
-               ┌────┴────┐      │      purge (HMAC)  │
+               ┌────┴────┐      │     purge(disabled)│
                │ KV Svc  │◄─────└────────────────────┘
                │ Worker  │ Service Binding (RPC)
                └─────────┘
